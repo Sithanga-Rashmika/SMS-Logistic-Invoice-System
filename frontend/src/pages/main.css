@@ -1,0 +1,128 @@
+.landing-container {
+  min-height: 100vh;
+  background: linear-gradient(to bottom right, #0d0e1d, #2d2d2d);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, sans-serif;
+}
+
+.content-wrapper {
+  text-align: center;
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.title {
+  color: white;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+.subtitle {
+  color: #cccccc;
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.button-container {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.button {
+  padding: 15px 30px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.button:hover {
+  transform: translateY(-2px);
+}
+
+.freight-button {
+  background-color: #09121d;
+  color: white;
+}
+
+.freight-button:hover {
+  background-color: #09121d;
+}
+
+.clearance-button {
+  background-color: white;
+  color: #09121d;
+}
+
+.clearance-button:hover {
+  background-color: white;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .title {
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .button-container {
+    flex-direction: column;
+  }
+
+  .button {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+}
+
+/* Reset default styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* CLEARENCE INVOICE PAGE */
+.main-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  color: #09121d;
+  width: 100%;
+  min-height: 100vh;
+}
+.form-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  width: 100%;
+  border-bottom: 1px solid #8e8e8e;
+}
+.invoice-view-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  width: 100%;
+  border-top: 1px solid #8e8e8e;
+}
+.heading-container{
+  display: flex;
+  justify-content: center;
+  margin: 20px auto;
+  height: auto;
+}
+label{
+  font-size: 18px;
+}
