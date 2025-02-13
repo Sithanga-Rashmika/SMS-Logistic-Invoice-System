@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+
 const Clearance_Invoice = () => {
   const [rows, setRows] = useState([{ description: "", value: "" }]);
   const [CompanyName, setCompanyName] = useState("TECHNO SOLUTIONS PVT LTD");
@@ -51,10 +52,34 @@ const Clearance_Invoice = () => {
     "TRANSPORT",
     "SUNDRY EXPENSES",
   ];
-  const handleDownloadPDF = () => {
-    
-};
 
+  const handleDownloadPDF = () => {
+    const input = document.getElementById("invoice-section");
+
+    html2canvas(input, { scale: 5 }).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF("p", "mm", "a4");
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+      const scaleFactor = 0.9;
+      const scaledWidth = pdfWidth * scaleFactor;
+      const scaledHeight = pdfHeight * scaleFactor;
+
+      const leftPadding = (pdfWidth - scaledWidth) / 2;
+      const topPadding = -10;
+
+      pdf.addImage(
+        imgData,
+        "PNG",
+        leftPadding,
+        topPadding,
+        scaledWidth,
+        scaledHeight
+      );
+      pdf.save(`${CompanyName}_${InvoiceNo}.pdf`);
+    });
+  };
 
   return (
     <>
@@ -65,7 +90,7 @@ const Clearance_Invoice = () => {
           </div>
 
           <div className="row mb-3">
-            <div className="col-md-4">
+            <div className="col-md-6">
               <label>Company Name</label>
               <input
                 type="text"
@@ -73,11 +98,11 @@ const Clearance_Invoice = () => {
                 placeholder="Type Company Name"
                 value={CompanyName}
                 onChange={(e) => {
-                  setCompanyName(e.target.value);
+                  setCompanyName(e.target.value.toUpperCase());
                 }}
               />
             </div>
-            <div className="col-md-4">
+            <div className="col-md-6">
               <label>Address Line 1</label>
               <input
                 type="text"
@@ -85,11 +110,14 @@ const Clearance_Invoice = () => {
                 placeholder="Type Address Line 1"
                 value={Add1}
                 onChange={(e) => {
-                  setAdd1(e.target.value);
+                  setAdd1(e.target.value.toUpperCase());
                 }}
               />
             </div>
-            <div className="col-md-4">
+          </div>
+
+          <div className="row mb-3">
+            <div className="col-md-6">
               <label>Address Line 2</label>
               <input
                 type="text"
@@ -97,13 +125,11 @@ const Clearance_Invoice = () => {
                 placeholder="Type Address Line 2"
                 value={Add2}
                 onChange={(e) => {
-                  setAdd2(e.target.value);
+                  setAdd2(e.target.value.toUpperCase());
                 }}
               />
             </div>
-          </div>
-          <div className="row mb-3">
-            <div className="col-md-4">
+            <div className="col-md-6">
               <label>Contact</label>
               <input
                 type="text"
@@ -111,11 +137,14 @@ const Clearance_Invoice = () => {
                 placeholder="Type Contact No"
                 value={Contact}
                 onChange={(e) => {
-                  setContact(e.target.value);
+                  setContact(e.target.value.toUpperCase());
                 }}
               />
             </div>
-            <div className="col-md-4">
+          </div>
+
+          <div className="row mb-3">
+            <div className="col-md-6">
               <label>Email</label>
               <input
                 type="email"
@@ -127,7 +156,7 @@ const Clearance_Invoice = () => {
                 }}
               />
             </div>
-            <div className="col-md-4">
+            <div className="col-md-6">
               <label>Invoice Number</label>
               <input
                 type="text"
@@ -140,8 +169,9 @@ const Clearance_Invoice = () => {
               />
             </div>
           </div>
+
           <div className="row mb-3">
-            <div className="col-md-4">
+            <div className="col-md-6">
               <label>Invoice Date</label>
               <input
                 type="date"
@@ -153,14 +183,14 @@ const Clearance_Invoice = () => {
                 }}
               />
             </div>
-            <div className="col-md-4">
+            <div className="col-md-6">
               <label>Shipper</label>
               <input
                 type="text"
                 className="form-control"
                 list="shippers-list"
                 value={Shipper}
-                onChange={(e) => setShipper(e.target.value)}
+                onChange={(e) => setShipper(e.target.value.toUpperCase())}
                 placeholder="Select Shipper"
               />
               <datalist id="shippers-list">
@@ -169,7 +199,10 @@ const Clearance_Invoice = () => {
                 ))}
               </datalist>
             </div>
-            <div className="col-md-4">
+          </div>
+
+          <div className="row mb-3">
+            <div className="col-md-6">
               <label>FLT Date</label>
               <input
                 type="date"
@@ -181,9 +214,7 @@ const Clearance_Invoice = () => {
                 }}
               />
             </div>
-          </div>
-          <div className="row mb-3">
-            <div className="col-md-4">
+            <div className="col-md-6">
               <label>FLT No</label>
               <input
                 type="text"
@@ -191,11 +222,13 @@ const Clearance_Invoice = () => {
                 placeholder="Type FLT No"
                 value={FLT}
                 onChange={(e) => {
-                  setFLT(e.target.value);
+                  setFLT(e.target.value.toUpperCase());
                 }}
               />
             </div>
-            <div className="col-md-4">
+          </div>
+          <div className="row mb-3">
+            <div className="col-md-6">
               <label>AWB No</label>
               <input
                 type="text"
@@ -207,7 +240,7 @@ const Clearance_Invoice = () => {
                 }}
               />
             </div>
-            <div className="col-md-4">
+            <div className="col-md-6">
               <label>Invoice Value</label>
               <input
                 type="text"
@@ -215,13 +248,13 @@ const Clearance_Invoice = () => {
                 placeholder="Type Invoice Value"
                 value={InvoiceVal}
                 onChange={(e) => {
-                  setInvoiceVal(e.target.value);
+                  setInvoiceVal(e.target.value.toUpperCase());
                 }}
               />
             </div>
           </div>
           <div className="row mb-3">
-            <div className="col-md-4">
+            <div className="col-md-6">
               <label>Product Description</label>
               <textarea
                 type="text"
@@ -230,7 +263,7 @@ const Clearance_Invoice = () => {
                 placeholder="Type Product Description"
                 value={Goods}
                 onChange={(e) => {
-                  setGoods(e.target.value);
+                  setGoods(e.target.value.toUpperCase());
                 }}
               />
             </div>
@@ -254,7 +287,7 @@ const Clearance_Invoice = () => {
                   value={row.description}
                   onChange={(e) => {
                     const newRows = [...rows];
-                    newRows[index].description = e.target.value;
+                    newRows[index].description = e.target.value.toUpperCase();
                     setRows(newRows);
                   }}
                   placeholder="Type Description"
@@ -294,7 +327,7 @@ const Clearance_Invoice = () => {
           </div>
 
           <div className="row mb-3">
-            <div className="col-md-4">
+            <div className="col-md-6">
               <label>Advanced</label>
               <input
                 type="text"
@@ -306,7 +339,7 @@ const Clearance_Invoice = () => {
                 }}
               />
             </div>
-            <div className="col-md-4">
+            <div className="col-md-6">
               <label>IOU Number</label>
               <input
                 type="text"
@@ -326,147 +359,142 @@ const Clearance_Invoice = () => {
             <h2>INVOICE LIVE VIEW</h2>
           </div>
           <section className="py-3 py-md-5" id="invoice-section">
-            <div className="container">
-              <div className="row justify-content-center">
-                <div className="col-12 col-lg-9 col-xl-8 col-xxl-7">
-                  <div className="row gy-3 mb-3">
-                    <div className="row align-items-center">
-                      <div className="col-6">
-                        <h3 className="text-uppercase m-0">
-                          Invoice No# {InvoiceNo}
-                        </h3>
-                        <strong>
-                          <span className="text-uppercase m-0">
-                            Invoice Date: {InvoiceDate}
-                          </span>
-                        </strong>
-                      </div>
-                      <div className="col-6 text-end">
-                        <a className="d-block" href="#">
-                          <img
-                            src="/sms Logistic logo.jpg"
-                            className="img-fluid"
-                            alt="BootstrapBrain Logo"
-                            width="135"
-                            height="44"
-                          />
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="row mb-3">
-                    <div className="col-12 col-sm-6 col-md-8">
-                      <h4>FROM</h4>
-                      <strong>SMS LOGISTIC</strong>
-                      <address>
-                        525/2 DARANAGAMA
-                        <br />
-                        DELGODA, 11700
-                        <br />
-                        SRI LANKA
-                        <br />
-                        Phone: (+94) 76-196-7978
-                        <br />
-                        Email: sugath567@gmail.com
-                      </address>
-                    </div>
-                    <div className="col-12 col-sm-6 col-md-4">
-                      <h4>BILL TO</h4>
-                      <strong>{CompanyName}</strong>
-                      <address>
-                        {Add1}
-                        <br />
-                        {Add2}
-                        <br />
-                        Phone: {Contact}
-                        <br />
-                        Email: {Email}
-                      </address>
-                    </div>
-                  </div>
-                  <div className="row mb-3">
-                    <div className="col-12 col-md-12">
-                      <address>
-                        <strong>SHIPPER: </strong>
-                        {"  " + Shipper}
-                        <br />
-                        <strong>FLT & DATE: </strong>
-                        {"  " + FLT + " " + FLTDate}
-                        <br />
-                        <strong>AWB NO: </strong>
-                        {"  " + Awb}
-                        <br />
-                        <strong>INVOICE NO: </strong>
-                        {"  " + InvoiceVal}
-                        <br />
-                        <strong>DESCRIPTION: </strong>
-                        {"  " + Goods}
-                        <br />
-                      </address>
-                    </div>
-                  </div>
-                  <div className="row mb-3">
-                    <div className="col-12">
-                      <div className="table-responsive">
-                        <table className="table table-striped">
-                          <thead>
-                            <tr>
-                              <th scope="col" className="text-uppercase">
-                                No
-                              </th>
-                              <th scope="col" className="text-uppercase">
-                                DESCRIPTION
-                              </th>
-                              <th
-                                scope="col"
-                                className="text-uppercase text-end"
-                              >
-                                AMOUNT
-                              </th>
-                            </tr>
-                          </thead>
-                          <tbody className="table-group-divider">
-                            {rows.map((row, index) => (
-                              <tr key={index}>
-                                <th scope="row">{index + 1}</th>
-                                <td>{row.description}</td>
-                                <td className="text-end">{row.value}</td>
-                              </tr>
-                            ))}
-                            <tr key="5">
-                              <td colSpan="2" className="text-end">
-                                SUBTOTAL
-                              </td>
-                              <td className="text-end">{subtotal}</td>
-                            </tr>
-                            <tr key="6">
-                              <td colSpan="2" className="text-end">
-                                IOU({IOU + "  "})ADVANCED
-                              </td>
-                              <td className="text-end">{Advanced}</td>
-                            </tr>
-                            <tr key="8">
-                              <th
-                                scope="row"
-                                colSpan="2"
-                                className="text-uppercase text-end"
-                              >
-                                BALANCE
-                              </th>
-                              <td className="text-end">{Total}</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
+            <div className="row gy-3 mb-3">
+              <div className="row align-items-center">
+                <div className="col-6">
+                  <h3 className="text-uppercase m-0">
+                    Invoice No# {InvoiceNo}
+                  </h3>
+                  <strong>
+                    <span className="text-uppercase m-0">
+                      Invoice Date: {InvoiceDate}
+                    </span>
+                  </strong>
+                </div>
+                <div className="col-6 text-end">
+                  <a className="d-block" href="#">
+                    <img
+                      src="/sms Logistic logo.jpg"
+                      className="img-fluid"
+                      alt="BootstrapBrain Logo"
+                      width="135"
+                      height="44"
+                    />
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div className="row mb-3">
+              <div className="col-12 col-sm-6 col-md-8">
+                <h4>FROM</h4>
+                <strong>SMS LOGISTIC</strong>
+                <address>
+                  525/2 DARANAGAMA
+                  <br />
+                  DELGODA, 11700
+                  <br />
+                  SRI LANKA
+                  <br />
+                  Phone: (+94) 76-196-7978
+                  <br />
+                  Email: sugath567@gmail.com
+                </address>
+              </div>
+              <div className="col-12 col-sm-6 col-md-4">
+                <h4>BILL TO</h4>
+                <strong>{CompanyName}</strong>
+                <address>
+                  {Add1}
+                  <br />
+                  {Add2}
+                  <br />
+                  Phone: {Contact}
+                  <br />
+                  Email: {Email}
+                </address>
+              </div>
+            </div>
+            <div className="row mb-3">
+              <div className="col-12 col-md-12">
+                <address>
+                  <strong>SHIPPER: </strong>
+                  {"  " + Shipper}
+                  <br />
+                  <strong>FLT & DATE: </strong>
+                  {"  " + FLT + " " + FLTDate}
+                  <br />
+                  <strong>AWB NO: </strong>
+                  {"  " + Awb}
+                  <br />
+                  <strong>INVOICE NO: </strong>
+                  {"  " + InvoiceVal}
+                  <br />
+                  <strong>DESCRIPTION: </strong>
+                  {"  " + Goods}
+                  <br />
+                </address>
+              </div>
+            </div>
+            <div className="row mb-3">
+              <div className="col-12">
+                <div className="table-responsive">
+                  <table className="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col" className="text-uppercase">
+                          No
+                        </th>
+                        <th scope="col" className="text-uppercase">
+                          DESCRIPTION
+                        </th>
+                        <th scope="col" className="text-uppercase text-end">
+                          AMOUNT
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="table-group-divider">
+                      {rows.map((row, index) => (
+                        <tr key={index}>
+                          <th scope="row">{index + 1}</th>
+                          <td>{row.description}</td>
+                          <td className="text-end">{row.value}</td>
+                        </tr>
+                      ))}
+                      <tr key="5">
+                        <td colSpan="2" className="text-end">
+                          SUBTOTAL
+                        </td>
+                        <td className="text-end">{subtotal}</td>
+                      </tr>
+                      <tr key="6">
+                        <td colSpan="2" className="text-end">
+                          IOU({IOU + "  "})ADVANCED
+                        </td>
+                        <td className="text-end">{Advanced}</td>
+                      </tr>
+                      <tr key="8">
+                        <th
+                          scope="row"
+                          colSpan="2"
+                          className="text-uppercase text-end"
+                        >
+                          BALANCE
+                        </th>
+                        <td className="text-end">{Total}</td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
           </section>
 
           <div className="heading-container">
-            <button type="submit" className="btn btn-primary mb-3" onClick={handleDownloadPDF}>
+            <button
+              type="submit"
+              className="btn btn-primary mb-3"
+              onClick={handleDownloadPDF}
+            >
               Download Invoice
             </button>
           </div>
