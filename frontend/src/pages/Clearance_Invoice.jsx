@@ -35,6 +35,19 @@ const Clearance_Invoice = () => {
   const shippers = [
     "PERKIN ELMER PVT LTD SINGAPORE",
     "ENDRESS & HAUSER AG SWITZERLAND",
+    "YOKOGAWA JAPAN LTD JAPAN",
+    "FUJI TECHNOLOGIES LTD SINGAPORE",
+    "ELEMENTIAL SCENTIFIC USA",
+    "TEKTRONIX PVT LTD HONGKONG",
+    "GULF CRYO SAUDI K.S.A",
+    "PICKERING LABORATORES USA",
+    "YOKOGAWA INDIA LTD INDIA",
+    "PEAK INSTRUMENTS LTD CHINA",
+    "LGC STANDARDS GMBIH GERMANY",
+    "AUMA INDIA PVT LTD INDIA",
+    "ENDRESS & HAUSER GMBH GERMANY",
+    "CHEMPLEX INDUSTIES, INC USA",
+    "EUROVECTOR SRL ITALY"
   ];
 
   const descriptions = [
@@ -56,7 +69,7 @@ const Clearance_Invoice = () => {
   const handleDownloadPDF = () => {
     const input = document.getElementById("invoice-section");
 
-    html2canvas(input, { scale: 5 }).then((canvas) => {
+    html2canvas(input, { scale: 1 }).then((canvas) => {
       const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF("p", "mm", "a4");
       const pdfWidth = pdf.internal.pageSize.getWidth();
@@ -426,7 +439,7 @@ const Clearance_Invoice = () => {
                   <strong>AWB NO: </strong>
                   {"  " + Awb}
                   <br />
-                  <strong>INVOICE NO: </strong>
+                  <strong>INVOICE VALUE: </strong>
                   {"  " + InvoiceVal}
                   <br />
                   <strong>DESCRIPTION: </strong>
